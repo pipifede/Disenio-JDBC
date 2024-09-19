@@ -113,10 +113,8 @@ public class Insert {
         String genero = scanner.nextLine();
 
         Estudiante estudiante = new Estudiante(documento, nombre, apellido, edad, ciudad, genero);
-        em.getTransaction().begin();
         try {
-            em.persist(estudiante);
-            em.getTransaction().commit();
+            estudianteDAO.addEstudiante(estudiante);
             System.out.println("Estudiante dado de alta exitosamente.");
         } catch (EntityExistsException e) {
             System.out.println("error");

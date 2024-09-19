@@ -1,6 +1,8 @@
-C:\Users\pipig\Documents\GitHub\jdbc\demo\src\main\java\com\example\Carrera.java
-C:\Users\pipig\Documents\GitHub\jdbc\demo\src\main\java\com\example\DataBaseConnection.java
-C:\Users\pipig\Documents\GitHub\jdbc\demo\src\main\java\com\example\Estudiante.java
-C:\Users\pipig\Documents\GitHub\jdbc\demo\src\main\java\com\example\Inscripcion.java
-C:\Users\pipig\Documents\GitHub\jdbc\demo\src\main\java\com\example\Insert.java
-C:\Users\pipig\Documents\GitHub\jdbc\demo\src\main\java\com\example\Main.java
+C:\Users\ignah\Desktop\Carpeta\Facultad\Diseño de Software\Disenio-JDBC\demo\src\main\java\com\example\Carrera.java
+C:\Users\ignah\Desktop\Carpeta\Facultad\Diseño de Software\Disenio-JDBC\demo\src\main\java\com\example\Estudiante.java
+C:\Users\ignah\Desktop\Carpeta\Facultad\Diseño de Software\Disenio-JDBC\demo\src\main\java\com\example\EstudianteDAO.java
+C:\Users\ignah\Desktop\Carpeta\Facultad\Diseño de Software\Disenio-JDBC\demo\src\main\java\com\example\Inscripcion.java
+C:\Users\ignah\Desktop\Carpeta\Facultad\Diseño de Software\Disenio-JDBC\demo\src\main\java\com\example\Insert.java
+C:\Users\ignah\Desktop\Carpeta\Facultad\Diseño de Software\Disenio-JDBC\demo\src\main\java\com\example\SearchStrategy\EstudianteSearchByEdad.java
+C:\Users\ignah\Desktop\Carpeta\Facultad\Diseño de Software\Disenio-JDBC\demo\src\main\java\com\example\SearchStrategy\EstudianteSearchByGenero.java
+C:\Users\ignah\Desktop\Carpeta\Facultad\Diseño de Software\Disenio-JDBC\demo\src\main\java\com\example\SearchStrategy\EstudianteSearchStrategy.java

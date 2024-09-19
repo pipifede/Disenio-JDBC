@@ -1,6 +1,9 @@
+com\example\EstudianteDAO.class
 com\example\Inscripcion.class
-com\example\Main.class
+com\example\SearchStrategy\EstudianteSearchByEdad.class
 com\example\Carrera.class
 com\example\Insert.class
-com\example\DataBaseConnection.class
+com\example\Estudiante$Genero.class
 com\example\Estudiante.class
+com\example\SearchStrategy\EstudianteSearchByGenero.class
+com\example\SearchStrategy\EstudianteSearchStrategy.class
