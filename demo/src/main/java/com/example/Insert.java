@@ -1,10 +1,9 @@
 package com.example;
 
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
+import com.example.MySQLDAO.MySQLEstudianteDAO;
 import com.example.SearchStrategy.EstudianteSearchByGenero;
-import com.mysql.cj.x.protobuf.Mysqlx.Error;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ import jakarta.persistence.*;
 public class Insert {
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("UnidadDePersistencia");
     private static EntityManager em = emf.createEntityManager();
-    private static EstudianteDAO estudianteDAO = new EstudianteDAO(em);
+    private static MySQLEstudianteDAO estudianteDAO = new MySQLEstudianteDAO(em);
     public static void main(String[] args) {
         /* EntityManagerFactory emf = Persistence.createEntityManagerFactory("UnidadDePersistencia");
         EntityManager em = emf.createEntityManager(); */

@@ -1,16 +1,19 @@
-package com.example;
+package com.example.MySQLDAO;
 
 import java.util.List;
 
+import com.example.DAOFactory.EstudianteDAO;
+import com.example.Estudiante;
 import com.example.SearchStrategy.EstudianteSearchStrategy;
+import com.example.SortStrategy.EstudianteSortStrategy;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
-public class EstudianteDAO {
+public class MySQLEstudianteDAO implements EstudianteDAO {
     private EntityManager entityManager;
 
-    public EstudianteDAO(EntityManager entityManager) {
+    public MySQLEstudianteDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
@@ -23,6 +26,18 @@ public class EstudianteDAO {
         } catch (Exception e) {
             System.out.println("Error al agregar estudiante:" + e);
         }
+    }
+
+    public List<Estudiante> getAllEstudiantes() {
+        String jpql = "SELECT e FROM Estudiante e ";
+        TypedQuery<Estudiante> aux = entityManager.createQuery(jpql, Estudiante.class);
+        return aux.getResultList();
+    }
+    public List<Estudiante> getAllEstudiantes(EstudianteSortStrategy orden) {
+        String alias = "e";
+        String jpql = "SELECT " + alias + " FROM Estudiante " + alias + " " + orden.getOrden(alias);
+        TypedQuery<Estudiante> aux = entityManager.createQuery(jpql, Estudiante.class);
+        return aux.getResultList();
     }
 
     public Estudiante getEstudianteByLibreta(long libretaUniversitaria) {

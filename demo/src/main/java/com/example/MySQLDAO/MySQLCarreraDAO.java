@@ -1,12 +1,15 @@
-package com.example;
+package com.example.MySQLDAO;
 import java.util.List;
+
+import com.example.Carrera;
+import com.example.DAOFactory.CarreraDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
-public class CarreraDAO {
+public class MySQLCarreraDAO implements CarreraDAO {
     private EntityManager entityManager;
 
-    public CarreraDAO(EntityManager entityManager){
+    public MySQLCarreraDAO(EntityManager entityManager){
         this.entityManager = entityManager;
     }
 
