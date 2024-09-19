@@ -1,0 +1,24 @@
+package com.example;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
+public class Inscripcion {
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "estudianteId", referencedColumnName = "libretaUniversitaria")
+    private Estudiante estudiante;
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "carreraId", referencedColumnName = "carreraId")
+    private Carrera carrera;
+
+    public Inscripcion(Estudiante estudiante, Carrera carrera) {
+        this.estudiante = estudiante;
+        this.carrera = carrera;
+    }
+}
