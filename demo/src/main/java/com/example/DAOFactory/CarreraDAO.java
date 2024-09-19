@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface CarreraDAO {
     public List<Carrera> getCarreras();
-    public List<Carrera> getCarrerasConEstudiantes();
-
+    public List<Carrera> getCarrerasConInscriptos();
 }

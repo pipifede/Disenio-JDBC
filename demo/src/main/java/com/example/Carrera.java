@@ -17,6 +17,9 @@ public class Carrera {
     private String nombreCarrera;
     @Column
     private LocalDateTime fechaCreacion;
+    
+    public Carrera(){};
+    
     public Carrera(String nombreCarrera, LocalDateTime fechaCreacion) {
         this.nombreCarrera = nombreCarrera;
         this.fechaCreacion = fechaCreacion;
@@ -29,5 +32,13 @@ public class Carrera {
     }
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+    @Override
+    public String toString() {
+        return "Carrera{" +
+               "carreraId=" + carreraId +
+               ", nombreCarrera='" + nombreCarrera + '\'' +
+               ", fechaCreacion=" + fechaCreacion +
+               '}';
     }
 }

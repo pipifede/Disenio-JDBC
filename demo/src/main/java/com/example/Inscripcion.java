@@ -17,6 +17,7 @@ public class Inscripcion {
     @JoinColumn(name = "carreraId", referencedColumnName = "carreraId")
     private Carrera carrera;
 
+    public Inscripcion(){};
     public Inscripcion(Estudiante estudiante, Carrera carrera) {
         this.estudiante = estudiante;
         this.carrera = carrera;

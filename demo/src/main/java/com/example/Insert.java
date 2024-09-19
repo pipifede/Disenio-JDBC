@@ -2,6 +2,10 @@ package com.example;
 
 import java.util.Scanner;
 
+import com.example.DAOFactory.CarreraDAO;
+import com.example.DAOFactory.EstudianteDAO;
+import com.example.DAOFactory.InscripcionDAO;
+import com.example.MySQLDAO.MySQLDAOFactory;
 import com.example.MySQLDAO.MySQLEstudianteDAO;
 import com.example.SearchStrategy.EstudianteSearchByGenero;
 
@@ -18,10 +22,15 @@ import jakarta.persistence.*;
 public class Insert {
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("UnidadDePersistencia");
     private static EntityManager em = emf.createEntityManager();
-    private static MySQLEstudianteDAO estudianteDAO = new MySQLEstudianteDAO(em);
+    private static MySQLDAOFactory MySQLDAOFactory = new MySQLDAOFactory();
+    private static EstudianteDAO estudianteDAO;
+    private static InscripcionDAO inscripcionDAO;
+    private static CarreraDAO carreraDAO;
     public static void main(String[] args) {
-        /* EntityManagerFactory emf = Persistence.createEntityManagerFactory("UnidadDePersistencia");
-        EntityManager em = emf.createEntityManager(); */
+        MySQLDAOFactory.createConnection("UnidadDePersistencia");
+        estudianteDAO = MySQLDAOFactory.getEstudianteDAO();
+        inscripcionDAO = MySQLDAOFactory.getInscripcionDAO();
+        carreraDAO= MySQLDAOFactory.getCarreraDAO();
         
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
@@ -77,23 +86,8 @@ public class Insert {
         em.close();
         emf.close();
         scanner.close();
-        /* Estudiante a = new Estudiante(213213213,"igna", "her", 12, "manuelita");
-        em.getTransaction().begin();
-        
-        em.persist(a);
-        //em.getTransaction().commit();
-        //em.getTransaction().begin();
-        Carrera c = new Carrera("sis", LocalDateTime.now());
-        em.persist(c);
-        em.getTransaction().commit();
-        em.getTransaction().begin();
-        a.setLibretaUniversitaria(1);
-        Inscripcion i = new Inscripcion(a, c);
-        
-        em.persist(i);
-        em.getTransaction().commit();
-        emf.close(); */
     }
+
 
     private static void darAltaEstudiante(Scanner scanner) {
         System.out.println("Ingrese el nombre del estudiante:");
@@ -117,10 +111,8 @@ public class Insert {
             System.out.println("Estudiante dado de alta exitosamente.");
         } catch (EntityExistsException e) {
             System.out.println("error");
-            // TODO: handle exception1
         } catch (Exception e){
             System.out.println("Error al agregar estudiante:" + e);
-            // TODO: handle exception
         }
         
     }
