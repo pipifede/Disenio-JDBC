@@ -8,7 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
 public class EstudianteSearchByGenero implements EstudianteSearchStrategy{
-    private String genero;
+    private String genero; //enum a genero
 
     public EstudianteSearchByGenero(){
         this.genero = "masculino";
@@ -21,6 +21,6 @@ public class EstudianteSearchByGenero implements EstudianteSearchStrategy{
         return aux.getResultList();
     }
     
-    public void setGeneroMasculino(){this.genero = "masculino";};
-    public void setGeneroFemenino(){this.genero = "femenino";};
+    public void setGeneroMasculino(){this.genero = "masculino";};//enum a genero
+    public void setGeneroFemenino(){this.genero = "femenino";};//enum a genero
 }
