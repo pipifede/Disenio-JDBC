@@ -29,7 +29,7 @@ public class MySQLEstudianteDAO implements EstudianteDAO {
     }
 
     public List<Estudiante> getAllEstudiantes() {
-        String jpql = "SELECT e FROM Estudiante e ";
+        String jpql = "SELECT e FROM Estudiante e ORDER BY e.nombre ASC";
         TypedQuery<Estudiante> aux = entityManager.createQuery(jpql, Estudiante.class);
         return aux.getResultList();
     }

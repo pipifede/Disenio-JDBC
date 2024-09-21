@@ -7,16 +7,10 @@ import com.example.DAOFactory.EstudianteDAO;
 import com.example.DAOFactory.InscripcionDAO;
 import com.example.MySQLDAO.MySQLDAOFactory;
 import com.example.MySQLDAO.MySQLEstudianteDAO;
-import com.example.SearchStrategy.EstudianteSearchByGenero;
+import com.example.SearchStrategy.*;
 
 import java.util.List;
 
-
-//import org.hibernate.boot.archive.scan.spi.Scanner;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.persistence.*;
 
 public class Insert {
@@ -45,9 +39,9 @@ public class Insert {
             System.out.println("6. Recuperar carreras con estudiantes inscriptos, ordenado por cantidad de inscriptos");
             System.out.println("7. Recuperar estudiantes de una carrera, filtrado por ciudad de residencia");
             System.out.println("0. Salir");
-            EstudianteSearchByGenero queryGen = new EstudianteSearchByGenero();
+            /* EstudianteSearchByGenero queryGen = new EstudianteSearchByGenero();
             List<Estudiante> estudiantesGenero = estudianteDAO.findEstudiantes(queryGen);
-            System.out.println(estudiantesGenero.get(0).toString());
+            System.out.println(estudiantesGenero.get(0).toString()); */
             int option = scanner.nextInt();
             scanner.nextLine(); // Limpiar buffer
 
@@ -75,7 +69,6 @@ public class Insert {
                     break;
                 case 0:
                     exit = true;
-                    System.out.println("Saliendo...");
                     break;
                 default:
                     System.out.println("Opción inválida. Intente de nuevo.");
@@ -106,11 +99,12 @@ public class Insert {
         String genero = scanner.nextLine();
 
         Estudiante estudiante = new Estudiante(documento, nombre, apellido, edad, ciudad, genero);
+        
         try {
             estudianteDAO.addEstudiante(estudiante);
             System.out.println("Estudiante dado de alta exitosamente.");
         } catch (EntityExistsException e) {
-            System.out.println("error");
+            System.out.println("Error");
         } catch (Exception e){
             System.out.println("Error al agregar estudiante:" + e);
         }
@@ -118,7 +112,7 @@ public class Insert {
     }
 
     private static void matricularEstudiante(Scanner scanner) {
-        System.out.println("Ingrese el número de libreta universitaria del estudiante:");
+        System.out.println("Ingresa el numero de libreta universitaria del estudiante:");
         long libretaUniversitaria = scanner.nextLong();
         System.out.println("Ingrese el ID de la carrera:");
         long carreraId = scanner.nextLong();
@@ -128,9 +122,8 @@ public class Insert {
 
         if (estudiante != null && carrera != null) {
             Inscripcion inscripcion = new Inscripcion(estudiante, carrera);
-            em.getTransaction().begin();
-            em.persist(inscripcion);
-            em.getTransaction().commit();
+            inscripcionDAO.addInscripcion(inscripcion);
+
             System.out.println("Estudiante matriculado en la carrera.");
         } else {
             System.out.println("Estudiante o carrera no encontrados.");
@@ -138,9 +131,10 @@ public class Insert {
     }
 
     private static void recuperarTodosEstudiantes() {
-        List<Estudiante> estudiantes = em.createQuery("SELECT e FROM Estudiante e ORDER BY e.nombre", Estudiante.class).getResultList();
+        List<Estudiante> estudiantes = estudianteDAO.getAllEstudiantes();
+
         for (Estudiante e : estudiantes) {
-            System.out.println(e.getNombre() + " " + e.getApellido());
+            System.out.println(e);
         }
     }
 
@@ -148,34 +142,29 @@ public class Insert {
         System.out.println("Ingrese el número de libreta universitaria del estudiante:");
         long libretaUniversitaria = scanner.nextLong();
 
-        Estudiante estudiante = em.find(Estudiante.class, libretaUniversitaria);
+        Estudiante estudiante = estudianteDAO.getEstudianteByLibreta(libretaUniversitaria);
         if (estudiante != null) {
-            System.out.println("Estudiante encontrado: " + estudiante.getNombre() + " " + estudiante.getApellido());
+            System.out.println("Estudiante encontrado por su libreta: " + estudiante);
         } else {
             System.out.println("Estudiante no encontrado.");
         }
     }
 
     private static void recuperarEstudiantesPorGenero(Scanner scanner) {
+        EstudianteSearchByGenero criterio = new EstudianteSearchByGenero();
+        
         System.out.println("Ingrese el género (M/F):");
         String genero = scanner.nextLine();
-        
-        List<Estudiante> estudiantes = em.createQuery("SELECT e FROM Estudiante e WHERE e.genero = :genero", Estudiante.class)
-                                        .setParameter("genero", genero)
-                                        .getResultList();
-        for (Estudiante e : estudiantes) {
-            System.out.println(e.getNombre() + " " + e.getApellido());
-        }
+        if (genero.equalsIgnoreCase("f")){criterio.setGeneroFemenino();};
+
+        List<Estudiante> estudiantes = estudianteDAO.findEstudiantes(criterio);
+        for (Estudiante e: estudiantes){System.out.println(e);};
     }
 
     private static void recuperarCarrerasConEstudiantes() {
-        List<Object[]> result = em.createQuery(
-                "SELECT c.nombreCarrera, COUNT(i) FROM Carrera c JOIN Inscripcion i ON c.carreraId = i.carrera.carreraId GROUP BY c.nombreCarrera ORDER BY COUNT(i) DESC")
-                .getResultList();
-
-        for (Object[] row : result) {
-            System.out.println("Carrera: " + row[0] + ", Cantidad de inscriptos: " + row[1]);
-        }
+        List<Carrera> carreras = carreraDAO.getCarrerasConInscriptos();
+        
+        for (Carrera c: carreras){System.out.println(c);}
     }
 
     private static void recuperarEstudiantesPorCarreraYCiudad(Scanner scanner) {

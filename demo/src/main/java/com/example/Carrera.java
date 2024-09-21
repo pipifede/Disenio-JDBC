@@ -35,7 +35,7 @@ public class Carrera {
     }
     @Override
     public String toString() {
-        return "Carrera{" +
+        return "{" +
                "carreraId=" + carreraId +
                ", nombreCarrera='" + nombreCarrera + '\'' +
                ", fechaCreacion=" + fechaCreacion +

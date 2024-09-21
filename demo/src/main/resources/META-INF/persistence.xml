@@ -8,8 +8,9 @@
         <!-- Specify Hibernate as the JPA provider -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         
-        <class>Estudisante</class>
+        <class>Estudiante</class>
         <class>Carrera</class>
+        <class>Inscripcion</class>
         <!--<class>Inscripcion</class>-->
         <!-- JDBC properties -->
         <properties>
@@ -26,6 +27,7 @@
             <!-- Additional Hibernate properties -->
             <property name="hibernate.format_sql" value="false"/>
             <property name="hibernate.use_sql_comments" value="false"/>
+            <!-- <property name="eclipselink.logging.level" value="FINEST"/> -->
         </properties>
     </persistence-unit>
 </persistence>

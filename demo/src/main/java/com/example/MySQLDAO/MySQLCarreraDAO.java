@@ -14,7 +14,7 @@ public class MySQLCarreraDAO implements CarreraDAO {
     }
 
     public List<Carrera> getCarreras(){
-        String query = "SELECT * FROM Carrera";
+        String query = "SELECT c FROM Carrera c";
         TypedQuery<Carrera> aux = entityManager.createQuery(query, Carrera.class);
         return aux.getResultList();
     }
