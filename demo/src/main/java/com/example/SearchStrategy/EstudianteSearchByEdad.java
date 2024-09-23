@@ -1,11 +1,5 @@
 package com.example.SearchStrategy;
 
-import com.example.Estudiante;
-import java.util.Map;
-import java.util.HashMap;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
-
 public class EstudianteSearchByEdad implements EstudianteSearchStrategy{
     private int edad;
 
@@ -15,7 +9,7 @@ public class EstudianteSearchByEdad implements EstudianteSearchStrategy{
 
     @Override
     public String buildSearchQuery(String alias) {
-        return "WHERE "+ alias +".edad ="+edad;
+        return alias +".edad ="+ edad;
     }
 
     public void setEdad(int edad){this.edad = edad;}

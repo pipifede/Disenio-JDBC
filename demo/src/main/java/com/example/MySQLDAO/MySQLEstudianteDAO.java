@@ -1,7 +1,6 @@
 package com.example.MySQLDAO;
 
 import java.util.List;
-import java.util.Map;
 import com.example.DAOFactory.EstudianteDAO;
 import com.example.Estudiante;
 import com.example.SearchStrategy.EstudianteSearchStrategy;
@@ -20,6 +19,7 @@ public class MySQLEstudianteDAO implements EstudianteDAO {
     // Dar de alta un estudiante
     public void addEstudiante(Estudiante estudiante) {
         try {
+            estudiante.setCiudadResidencia(estudiante.getCiudadResidencia().toLowerCase());
             entityManager.getTransaction().begin();
             entityManager.persist(estudiante);
             entityManager.getTransaction().commit();
@@ -50,18 +50,18 @@ public class MySQLEstudianteDAO implements EstudianteDAO {
 
     public List<Estudiante> findEstudiantes(EstudianteSearchStrategy busqueda) {
         String alias = "e";
-        String jpql= "SELECT " + alias + " FROM Estudiante " + alias + " " + busqueda.buildSearchQuery(alias);
+        String jpql= "SELECT " + alias + " FROM Estudiante " + alias + " WHERE " + busqueda.buildSearchQuery(alias);
 
         TypedQuery<Estudiante> query = entityManager.createQuery(jpql, Estudiante.class);
 
         return query.getResultList();
     }
 
-    public List<Estudiante> findEstudiantesBy2Filters(EstudianteSearchStrategy strategy1, EstudianteSearchStrategy strategy2){
+    public List<Estudiante> findEstudiantes(EstudianteSearchStrategy strategy1, EstudianteSearchStrategy strategy2){
         String alias = "e";
-        String jpql = "SELECT e FROM Estudiante e " +
-                "WHERE e.libretaUniversitaria IN (" + strategy1.buildSearchQuery("i") + ") " +
-                "AND " + strategy2.buildSearchQuery(alias);
+        String jpql = "SELECT "+ alias +" FROM Estudiante "+ alias +" " +
+                "WHERE "+ strategy1.buildSearchQuery(alias) +
+                " AND " + strategy2.buildSearchQuery(alias);
 
         TypedQuery<Estudiante> query = entityManager.createQuery(jpql, Estudiante.class);
 

@@ -13,5 +13,5 @@ public interface EstudianteDAO {
     public Estudiante getEstudianteByLibreta(long libretaUniversitaria);
     public Estudiante getEstudianteByNumeroDocumento(long numeroDeDocumento);
     public List<Estudiante> findEstudiantes(EstudianteSearchStrategy strategy);
-    public List<Estudiante> findEstudiantesBy2Filters(EstudianteSearchStrategy strategy, EstudianteSearchStrategy strategy2);
+    public List<Estudiante> findEstudiantes(EstudianteSearchStrategy strategy, EstudianteSearchStrategy strategy2);
 }

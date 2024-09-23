@@ -24,6 +24,9 @@ public class Carrera {
         this.nombreCarrera = nombreCarrera;
         this.fechaCreacion = fechaCreacion;
     }
+    public int getCarreraId() {
+        return carreraId;
+    }
     public String getNombreCarrera() {
         return nombreCarrera;
     }

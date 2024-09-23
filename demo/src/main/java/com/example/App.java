@@ -6,14 +6,13 @@ import com.example.DAOFactory.CarreraDAO;
 import com.example.DAOFactory.EstudianteDAO;
 import com.example.DAOFactory.InscripcionDAO;
 import com.example.MySQLDAO.MySQLDAOFactory;
-import com.example.MySQLDAO.MySQLEstudianteDAO;
 import com.example.SearchStrategy.*;
 
 import java.util.List;
 
 import jakarta.persistence.*;
 
-public class Insert {
+public class App {
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("UnidadDePersistencia");
     private static EntityManager em = emf.createEntityManager();
     private static MySQLDAOFactory MySQLDAOFactory = new MySQLDAOFactory();
@@ -42,8 +41,10 @@ public class Insert {
             /* EstudianteSearchByGenero queryGen = new EstudianteSearchByGenero();
             List<Estudiante> estudiantesGenero = estudianteDAO.findEstudiantes(queryGen);
             System.out.println(estudiantesGenero.get(0).toString()); */
+            
             int option = scanner.nextInt();
             scanner.nextLine(); // Limpiar buffer
+            
 
             switch (option) {
                 case 1:
@@ -177,7 +178,7 @@ public class Insert {
         EstudianteSearchStrategy strategy1 = new EstudianteSearchByCiudad(ciudad);
         EstudianteSearchStrategy strategy2 = new EstudianteSearchByCarrera(carreraId);
 
-        List<Estudiante> estudiantes = estudianteDAO.findEstudiantesBy2Filters(strategy2, strategy1);
+        List<Estudiante> estudiantes = estudianteDAO.findEstudiantes(strategy2, strategy1);
 
         for (Estudiante e : estudiantes) {
             System.out.println(e.getNombre() + " " + e.getApellido());

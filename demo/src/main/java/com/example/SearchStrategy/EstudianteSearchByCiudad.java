@@ -1,8 +1,5 @@
 package com.example.SearchStrategy;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class EstudianteSearchByCiudad implements EstudianteSearchStrategy{
     private String ciudadResidencia;
 
@@ -12,7 +9,7 @@ public class EstudianteSearchByCiudad implements EstudianteSearchStrategy{
 
     @Override
     public String buildSearchQuery(String alias) {
-        return alias +".ciudadResidencia = '"+ ciudadResidencia + "'";
+        return alias +".ciudadResidencia = '"+ ciudadResidencia.toLowerCase() + "'";
     }
 
     public String getCiudadDeResidencia() {
