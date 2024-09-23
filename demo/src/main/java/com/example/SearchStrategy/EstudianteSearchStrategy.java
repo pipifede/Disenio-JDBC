@@ -1,11 +1,11 @@
 package com.example.SearchStrategy;
 
-import java.util.List;
 
+import java.util.Map;
+import java.util.HashMap;
 import com.example.Estudiante;
-
 import jakarta.persistence.EntityManager;
 
 public interface EstudianteSearchStrategy {
-    List<Estudiante> search(EntityManager entityManager);
+    String buildSearchQuery(String alias);
 }

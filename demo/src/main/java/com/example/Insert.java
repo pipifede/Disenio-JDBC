@@ -169,16 +169,15 @@ public class Insert {
 
     private static void recuperarEstudiantesPorCarreraYCiudad(Scanner scanner) {
         System.out.println("Ingrese el ID de la carrera:");
-        long carreraId = scanner.nextLong();
+        int carreraId = scanner.nextInt();
         scanner.nextLine(); // Limpiar buffer
         System.out.println("Ingrese la ciudad de residencia:");
         String ciudad = scanner.nextLine();
 
-        List<Estudiante> estudiantes = em.createQuery(
-                "SELECT e FROM Inscripcion i JOIN i.estudiante e WHERE i.carrera.carreraId = :carreraId AND e.ciudadResidencia = :ciudad", Estudiante.class)
-                .setParameter("carreraId", carreraId)
-                .setParameter("ciudad", ciudad)
-                .getResultList();
+        EstudianteSearchStrategy strategy1 = new EstudianteSearchByCiudad(ciudad);
+        EstudianteSearchStrategy strategy2 = new EstudianteSearchByCarrera(carreraId);
+
+        List<Estudiante> estudiantes = estudianteDAO.findEstudiantesBy2Filters(strategy2, strategy1);
 
         for (Estudiante e : estudiantes) {
             System.out.println(e.getNombre() + " " + e.getApellido());

@@ -1,7 +1,7 @@
 package com.example.MySQLDAO;
 
 import java.util.List;
-
+import java.util.Map;
 import com.example.DAOFactory.EstudianteDAO;
 import com.example.Estudiante;
 import com.example.SearchStrategy.EstudianteSearchStrategy;
@@ -40,7 +40,7 @@ public class MySQLEstudianteDAO implements EstudianteDAO {
         return aux.getResultList();
     }
 
-    public Estudiante getEstudianteByLibreta(long libretaUniversitaria) {
+    public Estudiante getEstudianteByLibreta(long libretaUniversitaria) { //recuperar un estudiante, en base a su número de libreta universitaria.
         return entityManager.find(Estudiante.class, libretaUniversitaria);
     }
 
@@ -48,7 +48,27 @@ public class MySQLEstudianteDAO implements EstudianteDAO {
         return entityManager.find(Estudiante.class, numeroDeDocumento);
     }
 
-    public List<Estudiante> findEstudiantes(EstudianteSearchStrategy strategy) {
-        return strategy.search(entityManager);
+    public List<Estudiante> findEstudiantes(EstudianteSearchStrategy busqueda) {
+        String alias = "e";
+        String jpql= "SELECT " + alias + " FROM Estudiante " + alias + " " + busqueda.buildSearchQuery(alias);
+
+        TypedQuery<Estudiante> query = entityManager.createQuery(jpql, Estudiante.class);
+
+        return query.getResultList();
+    }
+
+    public List<Estudiante> findEstudiantesBy2Filters(EstudianteSearchStrategy strategy1, EstudianteSearchStrategy strategy2){
+        String alias = "e";
+        String jpql = "SELECT e FROM Estudiante e " +
+                "WHERE e.libretaUniversitaria IN (" + strategy1.buildSearchQuery("i") + ") " +
+                "AND " + strategy2.buildSearchQuery(alias);
+
+        TypedQuery<Estudiante> query = entityManager.createQuery(jpql, Estudiante.class);
+
+        return query.getResultList();
     }
 }
+
+
+
+

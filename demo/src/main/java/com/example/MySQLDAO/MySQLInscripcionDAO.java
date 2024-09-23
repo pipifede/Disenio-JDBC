@@ -11,8 +11,9 @@ public class MySQLInscripcionDAO implements InscripcionDAO{
     public MySQLInscripcionDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
     @Override
-    public void addInscripcion(Inscripcion inscripcion) {
+    public void addInscripcion(Inscripcion inscripcion) { //Matricular un estudiante en una carrera
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(inscripcion);

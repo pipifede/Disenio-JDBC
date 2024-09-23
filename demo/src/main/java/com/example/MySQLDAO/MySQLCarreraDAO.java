@@ -19,11 +19,11 @@ public class MySQLCarreraDAO implements CarreraDAO {
         return aux.getResultList();
     }
 
-    public List<Carrera> getCarrerasConInscriptos() {
+    public List<Carrera> getCarrerasConInscriptos() { //recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos
         String jpql = "SELECT c " +
                       "FROM Inscripcion i JOIN i.carrera c " +
                       "GROUP BY c " +
-                      "ORDER BY COUNT(i) DESC";
+                      "ORDER BY COUNT(i) DESC"; //ordena por cantidad de inscriptos
         TypedQuery<Carrera> query = entityManager.createQuery(jpql, Carrera.class);
         return query.getResultList();
     }

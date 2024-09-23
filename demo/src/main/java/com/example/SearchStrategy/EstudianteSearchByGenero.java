@@ -1,6 +1,8 @@
 package com.example.SearchStrategy;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.example.Estudiante;
 
@@ -15,12 +17,10 @@ public class EstudianteSearchByGenero implements EstudianteSearchStrategy{
     }
 
     @Override
-    public List<Estudiante> search(EntityManager entityManager) {
-        String jpql = "SELECT e FROM Estudiante e WHERE e.genero =" + this.genero;
-        TypedQuery<Estudiante> aux = entityManager.createQuery(jpql, Estudiante.class);
-        return aux.getResultList();
+    public String buildSearchQuery(String alias) {
+        return "WHERE "+ alias +".genero =" + genero;
     }
-    
+
     public void setGeneroMasculino(){this.genero = "masculino";};//enum a genero
     public void setGeneroFemenino(){this.genero = "femenino";};//enum a genero
 }
