@@ -1,8 +1,8 @@
 package com.example.DAOFactory;
 
-import com.example.Carrera;
-
 import java.util.List;
+
+import com.example.Entities.Carrera;
 
 public interface CarreraDAO {
     public List<Carrera> getCarreras();

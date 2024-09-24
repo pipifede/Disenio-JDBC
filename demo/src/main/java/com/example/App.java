@@ -3,9 +3,12 @@ package com.example;
 import java.util.Scanner;
 
 import com.example.DAOFactory.CarreraDAO;
+import com.example.DAOFactory.DAOFactory;
 import com.example.DAOFactory.EstudianteDAO;
 import com.example.DAOFactory.InscripcionDAO;
-import com.example.MySQLDAO.MySQLDAOFactory;
+import com.example.Entities.Carrera;
+import com.example.Entities.Estudiante;
+import com.example.Entities.Inscripcion;
 import com.example.SearchStrategy.*;
 
 import java.util.List;
@@ -15,15 +18,15 @@ import jakarta.persistence.*;
 public class App {
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("UnidadDePersistencia");
     private static EntityManager em = emf.createEntityManager();
-    private static MySQLDAOFactory MySQLDAOFactory = new MySQLDAOFactory();
+    private static DAOFactory jpaDAOFactory = DAOFactory.getDAOFactory(1);
     private static EstudianteDAO estudianteDAO;
     private static InscripcionDAO inscripcionDAO;
     private static CarreraDAO carreraDAO;
     public static void main(String[] args) {
-        MySQLDAOFactory.createConnection("UnidadDePersistencia");
-        estudianteDAO = MySQLDAOFactory.getEstudianteDAO();
-        inscripcionDAO = MySQLDAOFactory.getInscripcionDAO();
-        carreraDAO= MySQLDAOFactory.getCarreraDAO();
+        jpaDAOFactory.createConnection("UnidadDePersistencia");
+        estudianteDAO = jpaDAOFactory.getEstudianteDAO();
+        inscripcionDAO = jpaDAOFactory.getInscripcionDAO();
+        carreraDAO= jpaDAOFactory.getCarreraDAO();
         
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
@@ -38,10 +41,7 @@ public class App {
             System.out.println("6. Recuperar carreras con estudiantes inscriptos, ordenado por cantidad de inscriptos");
             System.out.println("7. Recuperar estudiantes de una carrera, filtrado por ciudad de residencia");
             System.out.println("0. Salir");
-            /* EstudianteSearchByGenero queryGen = new EstudianteSearchByGenero();
-            List<Estudiante> estudiantesGenero = estudianteDAO.findEstudiantes(queryGen);
-            System.out.println(estudiantesGenero.get(0).toString()); */
-            
+
             int option = scanner.nextInt();
             scanner.nextLine(); // Limpiar buffer
             

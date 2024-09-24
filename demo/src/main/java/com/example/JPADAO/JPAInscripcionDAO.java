@@ -1,14 +1,14 @@
-package com.example.MySQLDAO;
+package com.example.JPADAO;
 
-import com.example.Inscripcion;
 import com.example.DAOFactory.InscripcionDAO;
+import com.example.Entities.Inscripcion;
 
 import jakarta.persistence.EntityManager;
 
-public class MySQLInscripcionDAO implements InscripcionDAO{
+public class JPAInscripcionDAO implements InscripcionDAO{
     private EntityManager entityManager;
 
-    public MySQLInscripcionDAO(EntityManager entityManager) {
+    public JPAInscripcionDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

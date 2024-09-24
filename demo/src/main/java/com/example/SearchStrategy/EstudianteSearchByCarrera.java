@@ -9,7 +9,7 @@ public class EstudianteSearchByCarrera implements EstudianteSearchStrategy{
 
     @Override
     public String buildSearchQuery(String alias) {
-        return alias + ".libretaUniversitaria IN (SELECT i.estudiante.libretaUniversitaria FROM Inscripcion i WHERE i.carrera.carreraId = " + idCarrera + ")"; // APLICAR STRATEGY PARA SEARCHCARRERAPORID
+        return alias + ".libretaUniversitaria IN (SELECT i.estudiante.libretaUniversitaria FROM Inscripcion i WHERE i.carrera.carreraId = " + idCarrera + ")";
     }
 
     public int getIdCarrera() {

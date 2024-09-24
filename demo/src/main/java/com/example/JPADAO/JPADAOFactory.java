@@ -1,4 +1,4 @@
-package com.example.MySQLDAO;
+package com.example.JPADAO;
 
 import com.example.DAOFactory.CarreraDAO;
 import com.example.DAOFactory.DAOFactory;
@@ -9,10 +9,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-public class MySQLDAOFactory extends DAOFactory {
+public class JPADAOFactory extends DAOFactory {
     private static EntityManagerFactory emf;
     private static EntityManager em;
     
+    @Override
     public void createConnection(String name){
         emf = Persistence.createEntityManagerFactory(name);
         em = emf.createEntityManager();
@@ -20,16 +21,16 @@ public class MySQLDAOFactory extends DAOFactory {
 
     @Override
     public CarreraDAO getCarreraDAO() {
-        return new MySQLCarreraDAO(em);
+        return new JPACarreraDAO(em);
     }
 
     @Override
     public EstudianteDAO getEstudianteDAO() {
-        return new MySQLEstudianteDAO(em);
+        return new JPAEstudianteDAO(em);
     }
 
     @Override
     public InscripcionDAO getInscripcionDAO() {
-        return new MySQLInscripcionDAO(em);
+        return new JPAInscripcionDAO(em);
     }
 }
