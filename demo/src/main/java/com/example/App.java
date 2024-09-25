@@ -122,7 +122,7 @@ public class App {
         Carrera carrera = em.find(Carrera.class, carreraId);
 
         if (estudiante != null && carrera != null) {
-            Inscripcion inscripcion = new Inscripcion(estudiante, carrera);
+            Inscripcion inscripcion = new Inscripcion(estudiante, carrera, false);
             inscripcionDAO.addInscripcion(inscripcion);
 
             System.out.println("Estudiante matriculado en la carrera.");

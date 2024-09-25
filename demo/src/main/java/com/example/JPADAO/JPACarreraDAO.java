@@ -28,4 +28,5 @@ public class JPACarreraDAO implements CarreraDAO {
         TypedQuery<Carrera> query = entityManager.createQuery(jpql, Carrera.class);
         return query.getResultList();
     }
+
 }

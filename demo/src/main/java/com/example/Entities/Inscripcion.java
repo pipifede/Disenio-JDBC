@@ -1,9 +1,8 @@
 package com.example.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class Inscripcion {
@@ -17,11 +16,26 @@ public class Inscripcion {
     @JoinColumn(name = "carreraId", referencedColumnName = "carreraId")
     private Carrera carrera;
 
+    @Column(nullable = false)
+    private boolean graduado;
+
+    @Column(nullable = false)
+    private LocalDateTime fecha_inscripcion;
     ///CURSANDO O NO ///////
 
     public Inscripcion(){};
-    public Inscripcion(Estudiante estudiante, Carrera carrera) {
+    public Inscripcion(Estudiante estudiante, Carrera carrera, boolean graduado, LocalDateTime fechaInscripcion) {
         this.estudiante = estudiante;
         this.carrera = carrera;
+        this.graduado = graduado;
+        this.fecha_inscripcion = fechaInscripcion;
+
+    }
+    public Inscripcion(Estudiante estudiante, Carrera carrera, boolean graduado) {
+        this.estudiante = estudiante;
+        this.carrera = carrera;
+        this.graduado = graduado;
+        this.fecha_inscripcion = LocalDateTime.now();
+
     }
 }
