@@ -44,6 +44,7 @@ public class MySQLEstudianteDAO implements EstudianteDAO {
         return entityManager.find(Estudiante.class, libretaUniversitaria);
     }
 
+
     public Estudiante getEstudianteByNumeroDocumento(long numeroDeDocumento) {
         return entityManager.find(Estudiante.class, numeroDeDocumento);
     }

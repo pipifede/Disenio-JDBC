@@ -11,8 +11,6 @@ public abstract class DAOFactory {
 
     public abstract InscripcionDAO getInscripcionDAO();
 
-    //public abstract InscripcionDAO getInscripcionDAO();
-
     public static DAOFactory getDAOFactory(int numFactory) {
         switch (numFactory) {
             case MYSQL_JDBC:
