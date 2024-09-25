@@ -1,21 +1,33 @@
-package com.example.MySQLDAO;
+package com.example.JPADAO;
 import java.util.List;
 
-import com.example.Carrera;
 import com.example.DAOFactory.CarreraDAO;
+import com.example.Entities.Carrera;
+
+import com.example.Entities.Estudiante;
+import com.example.SortStrategy.CarreraSortStrategy;
+import com.example.SortStrategy.EstudianteSortStrategy;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
-public class MySQLCarreraDAO implements CarreraDAO {
+import javax.swing.text.Caret;
+
+public class JPACarreraDAO implements CarreraDAO {
     private EntityManager entityManager;
 
-    public MySQLCarreraDAO(EntityManager entityManager){
+    public JPACarreraDAO(EntityManager entityManager){
         this.entityManager = entityManager;
     }
 
     public List<Carrera> getCarreras(){
         String query = "SELECT c FROM Carrera c";
         TypedQuery<Carrera> aux = entityManager.createQuery(query, Carrera.class);
+        return aux.getResultList();
+    }
+
+    public List<Carrera> getCarrerasSorteadas(CarreraSortStrategy orden) {
+        String jpql = "SELECT c FROM Carrera c " + orden.getOrden();
+        TypedQuery<Carrera> aux = entityManager.createQuery(jpql, Carrera.class);
         return aux.getResultList();
     }
 
@@ -27,4 +39,5 @@ public class MySQLCarreraDAO implements CarreraDAO {
         TypedQuery<Carrera> query = entityManager.createQuery(jpql, Carrera.class);
         return query.getResultList();
     }
+
 }

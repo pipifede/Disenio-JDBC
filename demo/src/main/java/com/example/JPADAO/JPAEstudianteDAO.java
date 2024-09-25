@@ -1,18 +1,18 @@
-package com.example.MySQLDAO;
+package com.example.JPADAO;
 
 import java.util.List;
 import com.example.DAOFactory.EstudianteDAO;
-import com.example.Estudiante;
+import com.example.Entities.Estudiante;
 import com.example.SearchStrategy.EstudianteSearchStrategy;
 import com.example.SortStrategy.EstudianteSortStrategy;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
-public class MySQLEstudianteDAO implements EstudianteDAO {
+public class JPAEstudianteDAO implements EstudianteDAO {
     private EntityManager entityManager;
 
-    public MySQLEstudianteDAO(EntityManager entityManager) {
+    public JPAEstudianteDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

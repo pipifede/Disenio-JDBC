@@ -1,10 +1,13 @@
 package com.example.SearchStrategy;
 
+import com.example.Entities.Estudiante;
+import com.example.Entities.Estudiante.Genero;
+
 public class EstudianteSearchByGenero implements EstudianteSearchStrategy{
-    private String genero; //enum a genero
+    private Estudiante.Genero genero; 
 
     public EstudianteSearchByGenero(){
-        this.genero = "masculino";
+        this.genero = Genero.masculino;
     }
 
     @Override
@@ -12,6 +15,6 @@ public class EstudianteSearchByGenero implements EstudianteSearchStrategy{
         return alias +".genero =" + genero;
     }
 
-    public void setGeneroMasculino(){this.genero = "masculino";};//enum a genero
-    public void setGeneroFemenino(){this.genero = "femenino";};//enum a genero
+    public void setGeneroMasculino(){this.genero = Genero.masculino;};
+    public void setGeneroFemenino(){this.genero = Genero.femenino;};
 }
