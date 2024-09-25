@@ -1,11 +1,14 @@
 package com.example;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.example.DAOFactory.CarreraDAO;
 import com.example.DAOFactory.DAOFactory;
 import com.example.DAOFactory.EstudianteDAO;
 import com.example.DAOFactory.InscripcionDAO;
+import com.example.DTO.ReporteCarrera;
 import com.example.Entities.Carrera;
 import com.example.Entities.Estudiante;
 import com.example.Entities.Inscripcion;
@@ -190,18 +193,25 @@ public class App {
     private static void generarReportes(){
         CarreraSortStrategy strategySortCarrera = new CarreraSortByNombre();
         List<Carrera> carreras = carreraDAO.getCarrerasSorteadas(strategySortCarrera);
+        List<ReporteCarrera> reportes = new ArrayList<ReporteCarrera>();
 
         for (Carrera carrera: carreras){
+            ReporteCarrera reporte = new ReporteCarrera(carrera.getCarreraId());
+            reportes.add(reporte);
             InscripcionSearchStrategy strategy1 = new InscripcionSearchByCarrera(carrera.getCarreraId());
             InscripcionSearchStrategy strategyGraduados = new InscripcionSearchByGraduado(true);
             InscripcionSearchStrategy strategyInscriptos = new InscripcionSearchByGraduado(false);
 
-            List<Estudiante> graduados = inscripcionDAO.getEstudiantesBy2Filter(strategy1,strategyGraduados);
-            List<Estudiante> inscriptos = inscripcionDAO.getEstudiantesBy2Filter(strategy1,strategyInscriptos);
+            int indice = carrera.getFechaCreacion().getYear();
 
+            while (indice <= LocalDate.now().getYear()) { //hace que se agregue ordenado cronologicamente
+                InscripcionSearchStrategy strategyAnio = new InscripcionSearchByAnio(indice);
+                List<Estudiante> graduados = inscripcionDAO.getEstudiantesBy3Filter(strategy1, strategyGraduados, strategyAnio);
+                List<Estudiante> inscriptos = inscripcionDAO.getEstudiantesBy3Filter(strategy1, strategyInscriptos, strategyAnio);
 
-
-
+                reporte.addReporteAnual(indice,inscriptos,graduados);
+                indice++;
+            }
         }
     }
 

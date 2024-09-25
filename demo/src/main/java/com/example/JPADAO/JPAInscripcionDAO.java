@@ -44,5 +44,17 @@ public class JPAInscripcionDAO implements InscripcionDAO{
 
         return query.getResultList();
     }
+
+    public List<Estudiante> getEstudiantesBy3Filter(InscripcionSearchStrategy strategy1, InscripcionSearchStrategy strategy2, InscripcionSearchStrategy strategy3){
+        String jpql = "SELECT i.estudiante FROM Inscripcion i " +
+                "WHERE "+ strategy1.searchQuery() +
+                " AND " + strategy2.searchQuery() +
+                " AND " + strategy3.searchQuery();
+
+        TypedQuery<Estudiante> query = entityManager.createQuery(jpql, Estudiante.class);
+
+        return query.getResultList();
+    }
+
     
 }

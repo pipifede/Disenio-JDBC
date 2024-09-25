@@ -10,5 +10,5 @@ public interface InscripcionDAO {
     public abstract void addInscripcion(Inscripcion inscripcion);
     public abstract List<Estudiante> getEstudiantesByFilter(InscripcionSearchStrategy strategy);
     public abstract List<Estudiante> getEstudiantesBy2Filter(InscripcionSearchStrategy strategy1, InscripcionSearchStrategy strategy2);
-
+    public abstract List<Estudiante> getEstudiantesBy3Filter(InscripcionSearchStrategy strategy1, InscripcionSearchStrategy strategy2, InscripcionSearchStrategy strategy3);
 }
