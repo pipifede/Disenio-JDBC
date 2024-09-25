@@ -4,8 +4,13 @@ import java.util.List;
 import com.example.DAOFactory.CarreraDAO;
 import com.example.Entities.Carrera;
 
+import com.example.Entities.Estudiante;
+import com.example.SortStrategy.CarreraSortStrategy;
+import com.example.SortStrategy.EstudianteSortStrategy;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+
+import javax.swing.text.Caret;
 
 public class JPACarreraDAO implements CarreraDAO {
     private EntityManager entityManager;
@@ -17,6 +22,12 @@ public class JPACarreraDAO implements CarreraDAO {
     public List<Carrera> getCarreras(){
         String query = "SELECT c FROM Carrera c";
         TypedQuery<Carrera> aux = entityManager.createQuery(query, Carrera.class);
+        return aux.getResultList();
+    }
+
+    public List<Carrera> getCarrerasSorteadas(CarreraSortStrategy orden) {
+        String jpql = "SELECT c FROM Carrera c " + orden.getOrden();
+        TypedQuery<Carrera> aux = entityManager.createQuery(jpql, Carrera.class);
         return aux.getResultList();
     }
 

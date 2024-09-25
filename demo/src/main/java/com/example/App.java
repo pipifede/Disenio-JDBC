@@ -13,6 +13,8 @@ import com.example.SearchStrategy.*;
 
 import java.util.List;
 
+import com.example.SortStrategy.CarreraSortByNombre;
+import com.example.SortStrategy.CarreraSortStrategy;
 import jakarta.persistence.*;
 
 public class App {
@@ -184,4 +186,23 @@ public class App {
             System.out.println(e.getNombre() + " " + e.getApellido());
         }
     }
+
+    private static void generarReportes(){
+        CarreraSortStrategy strategySortCarrera = new CarreraSortByNombre();
+        List<Carrera> carreras = carreraDAO.getCarrerasSorteadas(strategySortCarrera);
+
+        for (Carrera carrera: carreras){
+            InscripcionSearchStrategy strategy1 = new InscripcionSearchByCarrera(carrera.getCarreraId());
+            InscripcionSearchStrategy strategyGraduados = new InscripcionSearchByGraduado(true);
+            InscripcionSearchStrategy strategyInscriptos = new InscripcionSearchByGraduado(false);
+
+            List<Estudiante> graduados = inscripcionDAO.getEstudiantesBy2Filter(strategy1,strategyGraduados);
+            List<Estudiante> inscriptos = inscripcionDAO.getEstudiantesBy2Filter(strategy1,strategyInscriptos);
+
+
+
+
+        }
+    }
+
 }
