@@ -4,6 +4,7 @@ package com.example.DTO;
 import com.example.Entities.Estudiante;
 import com.example.Entities.Inscripcion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReporteCarrera {
@@ -14,8 +15,8 @@ public class ReporteCarrera {
 
         public ReporteAnual(int anio, List<Estudiante> inscriptos, List<Estudiante> graduados) {
             this.anio = anio;
-            this.inscriptos = null;
-            this.graduados = null;
+            this.inscriptos = inscriptos;
+            this.graduados = graduados;
         }
 
         public int getAnio() {
@@ -45,14 +46,25 @@ public class ReporteCarrera {
             StringBuilder ret = new StringBuilder();
             ret.append("Reporte Anual del Año: ").append(anio).append("\n");
             ret.append("Inscriptos:\n");
-            for (Estudiante estudiante : inscriptos) {
-                ret.append(estudiante.toString())
-                        .append("\n");
+
+            // Verificar si hay estudiantes inscriptos
+            if (inscriptos.isEmpty()) {
+                ret.append("No hay inscriptos.\n");
+            } else {
+                for (Estudiante estudiante : inscriptos) {
+                    ret.append(estudiante.toString())
+                            .append("\n");
+                }
             }
+
             ret.append("Graduados:\n");
-            for (Estudiante estudiante : graduados) {
-                ret.append(estudiante.toString())
-                        .append("\n");
+            if (graduados.isEmpty()) {
+                ret.append("No hay graduados.\n");
+            } else {
+                for (Estudiante estudiante : graduados) {
+                    ret.append(estudiante.toString())
+                            .append("\n");
+                }
             }
             return ret.toString();
         }
@@ -65,7 +77,7 @@ public class ReporteCarrera {
 
     public ReporteCarrera(int idCarrera){
         this.idCarrera = idCarrera;
-        this.inscripciones = null;
+        this.inscripciones = new ArrayList<ReporteAnual>();
     }
 
     public void addReporteAnual(int anio, List<Estudiante> inscriptos, List<Estudiante> graduados) {
