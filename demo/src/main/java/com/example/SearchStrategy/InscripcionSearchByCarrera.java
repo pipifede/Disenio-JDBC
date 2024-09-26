@@ -17,6 +17,6 @@ public class InscripcionSearchByCarrera implements InscripcionSearchStrategy {
 
     @Override
     public String searchQuery() {
-        return "i.carrera="+ idCarrera;
+        return "i.carrera.carreraId = "+ idCarrera;
     }
 }

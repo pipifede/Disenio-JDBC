@@ -42,30 +42,36 @@ public class ReporteService {
 
             //agarra las inscripciones de c ordenadas por fecha de inscripcion.
             List<Inscripcion> inscripciones = inscripcionDAO.getInscripcionByFilterOrdenadas(strategySearchCarrera, strategySortInscripcion);
-            int indice = inscripciones.getFirst().getFecha_inscripcion().getYear();
+            if (!inscripciones.isEmpty()) {
+                int indice = inscripciones.get(0).getFecha_inscripcion().getYear();
 
-            for (Inscripcion inscripcion : inscripciones) {
-                if(indice == inscripcion.getFecha_inscripcion().getYear()){
-                    if(inscripcion.isGraduado()){
-                        graduados.add(inscripcion.getEstudiante());
+                for (Inscripcion inscripcion : inscripciones) {
+                    if (indice == inscripcion.getFecha_inscripcion().getYear()) {
+                        if (inscripcion.isGraduado()) {
+                            graduados.add(inscripcion.getEstudiante());
+                        } else {
+                            inscriptos.add(inscripcion.getEstudiante());
+                        }
                     } else {
-                        inscriptos.add(inscripcion.getEstudiante());
-                    }
-                } else {
-                    reporte.addReporteAnual(indice, inscriptos, graduados);
-                    indice = inscripcion.getFecha_inscripcion().getYear();
-                    inscriptos.clear();
-                    graduados.clear();
-                    if(inscripcion.isGraduado()){
-                        graduados.add(inscripcion.getEstudiante());
-                    }else{
-                        inscriptos.add(inscripcion.getEstudiante());
+                        reporte.addReporteAnual(indice, inscriptos, graduados);
+                        indice = inscripcion.getFecha_inscripcion().getYear();
+                        inscriptos.clear();
+                        graduados.clear();
+                        if (inscripcion.isGraduado()) {
+                            graduados.add(inscripcion.getEstudiante());
+                        } else {
+                            inscriptos.add(inscripcion.getEstudiante());
+                        }
                     }
                 }
+                reporte.addReporteAnual(indice, inscriptos, graduados);
+                this.reportes.add(reporte);
+            } else {
+                // Manejo del caso en que la lista esté vacía
+                System.out.println("No se encontraron inscripciones.");
             }
 
-            reporte.addReporteAnual(indice, inscriptos, graduados);
-            this.reportes.add(reporte);
+
         }
     }
 

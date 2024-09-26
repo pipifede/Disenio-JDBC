@@ -1,6 +1,7 @@
 package com.example;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -48,6 +49,8 @@ public class App {
             System.out.println("5. Recuperar todos los estudiantes por género");
             System.out.println("6. Recuperar carreras con estudiantes inscriptos, ordenado por cantidad de inscriptos");
             System.out.println("7. Recuperar estudiantes de una carrera, filtrado por ciudad de residencia");
+            System.out.println("8. Agregar una nueva carrera");
+            System.out.println("9. Generar reporte");
             System.out.println("0. Salir");
 
             int option = scanner.nextInt();
@@ -75,6 +78,12 @@ public class App {
                     break;
                 case 7:
                     recuperarEstudiantesPorCarreraYCiudad(scanner);
+                    break;
+                case 8:
+                    darAltaCarrera(scanner);
+                    break;
+                case 9:
+                    generarReportes();
                     break;
                 case 0:
                     exit = true;
@@ -192,11 +201,25 @@ public class App {
             System.out.println(e.getNombre() + " " + e.getApellido());
         }
     }
+
+    private static void darAltaCarrera(Scanner scanner){
+        System.out.println("Ingrese el nombre de la carrera:");
+        String nombre = scanner.nextLine();
+        Carrera carrera = new Carrera(nombre,LocalDateTime.now());
+
+        try {
+            carreraDAO.addCarrera(carrera);
+            System.out.println("Carrera dada de alta exitosamente.");
+        } catch (EntityExistsException e) {
+            System.out.println("Error");
+        } catch (Exception e){
+            System.out.println("Error al agregar carrera:" + e);
+        }
+    };
+
     private static void generarReportes() {
         ReporteService reporte = new ReporteService();
         reporte.generarReporte(carreraDAO, inscripcionDAO);
         reporte.printReporte();
     }
-
-
 }

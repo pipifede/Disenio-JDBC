@@ -1,5 +1,6 @@
 package com.example.DAOFactory;
 
+import com.example.Entities.Carrera;
 import com.example.Entities.Estudiante;
 import com.example.Entities.Inscripcion;
 import com.example.SearchStrategy.InscripcionSearchStrategy;

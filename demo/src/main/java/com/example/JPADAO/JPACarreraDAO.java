@@ -19,6 +19,17 @@ public class JPACarreraDAO implements CarreraDAO {
         this.entityManager = entityManager;
     }
 
+    @Override
+    public void addCarrera(Carrera carrera) {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(carrera);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error al agregar carrera:" + e);
+        }
+    }
+
     public List<Carrera> getCarreras(){
         String query = "SELECT c FROM Carrera c";
         TypedQuery<Carrera> aux = entityManager.createQuery(query, Carrera.class);
