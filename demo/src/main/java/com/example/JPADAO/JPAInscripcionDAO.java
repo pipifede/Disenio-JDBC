@@ -5,6 +5,7 @@ import com.example.Entities.Estudiante;
 import com.example.Entities.Inscripcion;
 
 import com.example.SearchStrategy.InscripcionSearchStrategy;
+import com.example.SortStrategy.InscripcionSortStrategy;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
@@ -28,33 +29,16 @@ public class JPAInscripcionDAO implements InscripcionDAO{
         }
     }
 
-    public List<Estudiante> getEstudiantesByFilter(InscripcionSearchStrategy strategy){
-        String jpql = "SELECT i.estudiante FROM Inscripcion i WHERE" + strategy.searchQuery();
-        TypedQuery<Estudiante> query = entityManager.createQuery(jpql, Estudiante.class);
+    public List<Inscripcion> getInscripcionByFilterOrdenadas(InscripcionSearchStrategy strategy1, InscripcionSortStrategy strategy2){
+        String jpql = "SELECT i FROM Inscripcion i " +
+                "WHERE "+ strategy1.searchQuery() + " " +
+                strategy2.getOrden("i");
+
+        TypedQuery<Inscripcion> query = entityManager.createQuery(jpql, Inscripcion.class);
 
         return query.getResultList();
     }
 
-    public List<Estudiante> getEstudiantesBy2Filter(InscripcionSearchStrategy strategy1, InscripcionSearchStrategy strategy2){
-        String jpql = "SELECT i.estudiante FROM Inscripcion i " +
-                "WHERE "+ strategy1.searchQuery() +
-                " AND " + strategy2.searchQuery();
-
-        TypedQuery<Estudiante> query = entityManager.createQuery(jpql, Estudiante.class);
-
-        return query.getResultList();
-    }
-
-    public List<Estudiante> getEstudiantesBy3Filter(InscripcionSearchStrategy strategy1, InscripcionSearchStrategy strategy2, InscripcionSearchStrategy strategy3){
-        String jpql = "SELECT i.estudiante FROM Inscripcion i " +
-                "WHERE "+ strategy1.searchQuery() +
-                " AND " + strategy2.searchQuery() +
-                " AND " + strategy3.searchQuery();
-
-        TypedQuery<Estudiante> query = entityManager.createQuery(jpql, Estudiante.class);
-
-        return query.getResultList();
-    }
 
     
 }

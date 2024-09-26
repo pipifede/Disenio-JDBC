@@ -3,12 +3,11 @@ package com.example.DAOFactory;
 import com.example.Entities.Estudiante;
 import com.example.Entities.Inscripcion;
 import com.example.SearchStrategy.InscripcionSearchStrategy;
+import com.example.SortStrategy.InscripcionSortStrategy;
 
 import java.util.List;
 
 public interface InscripcionDAO {
     public abstract void addInscripcion(Inscripcion inscripcion);
-    public abstract List<Estudiante> getEstudiantesByFilter(InscripcionSearchStrategy strategy);
-    public abstract List<Estudiante> getEstudiantesBy2Filter(InscripcionSearchStrategy strategy1, InscripcionSearchStrategy strategy2);
-    public abstract List<Estudiante> getEstudiantesBy3Filter(InscripcionSearchStrategy strategy1, InscripcionSearchStrategy strategy2, InscripcionSearchStrategy strategy3);
+    public List<Inscripcion> getInscripcionByFilterOrdenadas(InscripcionSearchStrategy strategy1, InscripcionSortStrategy strategy2);
 }

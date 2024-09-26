@@ -16,8 +16,11 @@ import com.example.SearchStrategy.*;
 
 import java.util.List;
 
+import com.example.Services.ReporteService;
 import com.example.SortStrategy.CarreraSortByNombre;
 import com.example.SortStrategy.CarreraSortStrategy;
+import com.example.SortStrategy.InscripcionSortByFecha;
+import com.example.SortStrategy.InscripcionSortStrategy;
 import jakarta.persistence.*;
 
 public class App {
@@ -189,30 +192,11 @@ public class App {
             System.out.println(e.getNombre() + " " + e.getApellido());
         }
     }
-
-    private static void generarReportes(){
-        CarreraSortStrategy strategySortCarrera = new CarreraSortByNombre();
-        List<Carrera> carreras = carreraDAO.getCarrerasSorteadas(strategySortCarrera);
-        List<ReporteCarrera> reportes = new ArrayList<ReporteCarrera>();
-
-        for (Carrera carrera: carreras){
-            ReporteCarrera reporte = new ReporteCarrera(carrera.getCarreraId());
-            reportes.add(reporte);
-            InscripcionSearchStrategy strategy1 = new InscripcionSearchByCarrera(carrera.getCarreraId());
-            InscripcionSearchStrategy strategyGraduados = new InscripcionSearchByGraduado(true);
-            InscripcionSearchStrategy strategyInscriptos = new InscripcionSearchByGraduado(false);
-
-            int indice = carrera.getFechaCreacion().getYear();
-
-            while (indice <= LocalDate.now().getYear()) { //hace que se agregue ordenado cronologicamente
-                InscripcionSearchStrategy strategyAnio = new InscripcionSearchByAnio(indice);
-                List<Estudiante> graduados = inscripcionDAO.getEstudiantesBy3Filter(strategy1, strategyGraduados, strategyAnio);
-                List<Estudiante> inscriptos = inscripcionDAO.getEstudiantesBy3Filter(strategy1, strategyInscriptos, strategyAnio);
-
-                reporte.addReporteAnual(indice,inscriptos,graduados);
-                indice++;
-            }
-        }
+    private static void generarReportes() {
+        ReporteService reporte = new ReporteService();
+        reporte.generarReporte(carreraDAO, inscripcionDAO);
+        reporte.printReporte();
     }
+
 
 }

@@ -1,11 +1,8 @@
 package com.example.DTO;
 
-import com.example.DAOFactory.InscripcionDAO;
+
 import com.example.Entities.Estudiante;
-import com.example.JPADAO.JPAInscripcionDAO;
-import com.example.SearchStrategy.InscripcionSearchByCarrera;
-import com.example.SearchStrategy.InscripcionSearchByGraduado;
-import com.example.SearchStrategy.InscripcionSearchStrategy;
+import com.example.Entities.Inscripcion;
 
 import java.util.List;
 
@@ -17,8 +14,8 @@ public class ReporteCarrera {
 
         public ReporteAnual(int anio, List<Estudiante> inscriptos, List<Estudiante> graduados) {
             this.anio = anio;
-            this.inscriptos = inscriptos;
-            this.graduados = graduados;
+            this.inscriptos = null;
+            this.graduados = null;
         }
 
         public int getAnio() {
@@ -44,8 +41,24 @@ public class ReporteCarrera {
         public void setGraduados(List<Estudiante> graduados) {
             this.graduados = graduados;
         }
-    }
+        public String printReporteAnual() {
+            StringBuilder ret = new StringBuilder();
+            ret.append("Reporte Anual del Año: ").append(anio).append("\n");
+            ret.append("Inscriptos:\n");
+            for (Estudiante estudiante : inscriptos) {
+                ret.append(estudiante.toString())
+                        .append("\n");
+            }
+            ret.append("Graduados:\n");
+            for (Estudiante estudiante : graduados) {
+                ret.append(estudiante.toString())
+                        .append("\n");
+            }
+            return ret.toString();
+        }
 
+
+    }
 
     private int idCarrera;
     private List<ReporteAnual> inscripciones;
@@ -56,15 +69,26 @@ public class ReporteCarrera {
     }
 
     public void addReporteAnual(int anio, List<Estudiante> inscriptos, List<Estudiante> graduados) {
-        ReporteAnual reporteAnual = new ReporteAnual(anio, inscriptos, graduados);
-        this.inscripciones.add(reporteAnual);
+        this.inscripciones.add(new ReporteAnual(anio, inscriptos, graduados));
     }
+
     public int getIdCarrera() {
         return idCarrera;
     }
 
     public void setIdCarrera(int idCarrera) {
         this.idCarrera = idCarrera;
+    }
+
+    public String printReporte() {
+        StringBuilder ret = new StringBuilder();
+        ret.append("Reporte de Carrera ID: ").append(idCarrera).append("\n");
+
+        for (ReporteAnual reporteAnual : inscripciones) {
+            ret.append(reporteAnual.printReporteAnual()).append("\n");
+        }
+
+        return ret.toString();
     }
 
 }

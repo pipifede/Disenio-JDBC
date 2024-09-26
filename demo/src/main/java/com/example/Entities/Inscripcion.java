@@ -21,7 +21,6 @@ public class Inscripcion {
 
     @Column(nullable = false)
     private LocalDateTime fecha_inscripcion;
-    ///CURSANDO O NO ///////
 
     public Inscripcion(){};
     public Inscripcion(Estudiante estudiante, Carrera carrera, boolean graduado, LocalDateTime fechaInscripcion) {
@@ -37,5 +36,21 @@ public class Inscripcion {
         this.graduado = graduado;
         this.fecha_inscripcion = LocalDateTime.now();
 
+    }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public boolean isGraduado() {
+        return graduado;
+    }
+
+    public LocalDateTime getFecha_inscripcion() {
+        return fecha_inscripcion;
     }
 }
