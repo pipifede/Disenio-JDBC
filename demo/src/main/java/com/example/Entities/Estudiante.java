@@ -79,6 +79,16 @@ public class Estudiante {
     public void setEdad(int edad) {
         this.edad = edad;
     }
+    public Genero getGenero() {
+        return this.genero;
+    }
+    public void setGenero(String genero) {
+        if (genero.equals("masculino")){
+            this.genero = Genero.masculino;
+        }else if (genero.equals("femenino")){
+            this.genero = Genero.femenino;
+        }
+    }
     public String getCiudadResidencia() {
         return ciudadResidencia;
     }

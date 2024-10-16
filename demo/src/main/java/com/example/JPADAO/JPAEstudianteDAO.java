@@ -1,6 +1,7 @@
 package com.example.JPADAO;
 
 import java.util.List;
+
 import com.example.DAOFactory.EstudianteDAO;
 import com.example.Entities.Estudiante;
 import com.example.SearchStrategy.EstudianteSearchStrategy;
@@ -25,6 +26,27 @@ public class JPAEstudianteDAO implements EstudianteDAO {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println("Error al agregar estudiante:" + e);
+        }
+    }
+
+    // Dar de baja un estudiante
+    public void deleteEstudiante(long libretaUniversitaria) {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(getEstudianteByLibreta(libretaUniversitaria));
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error al eliminar estudiante:" + e);
+        }
+    }
+
+    public void updateEstudiante(Estudiante estudiante) {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(estudiante);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error al eliminar estudiante:" + e);
         }
     }
 

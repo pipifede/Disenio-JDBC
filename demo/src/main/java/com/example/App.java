@@ -1,15 +1,12 @@
 package com.example;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.example.DAOFactory.CarreraDAO;
 import com.example.DAOFactory.DAOFactory;
 import com.example.DAOFactory.EstudianteDAO;
 import com.example.DAOFactory.InscripcionDAO;
-import com.example.DTO.ReporteCarrera;
 import com.example.Entities.Carrera;
 import com.example.Entities.Estudiante;
 import com.example.Entities.Inscripcion;
@@ -18,10 +15,6 @@ import com.example.SearchStrategy.*;
 import java.util.List;
 
 import com.example.Services.ReporteService;
-import com.example.SortStrategy.CarreraSortByNombre;
-import com.example.SortStrategy.CarreraSortStrategy;
-import com.example.SortStrategy.InscripcionSortByFecha;
-import com.example.SortStrategy.InscripcionSortStrategy;
 import jakarta.persistence.*;
 
 public class App {
@@ -51,11 +44,13 @@ public class App {
             System.out.println("7. Recuperar estudiantes de una carrera, filtrado por ciudad de residencia");
             System.out.println("8. Agregar una nueva carrera");
             System.out.println("9. Generar reporte");
+            System.out.println("10. Eliminar un estudiante"); 
+            System.out.println("11. Actualizar un estudiante"); 
+            System.out.println("12. Recuperar carreras"); 
             System.out.println("0. Salir");
 
             int option = scanner.nextInt();
-            scanner.nextLine(); // Limpiar buffer
-            
+            scanner.nextLine();
 
             switch (option) {
                 case 1:
@@ -85,6 +80,15 @@ public class App {
                 case 9:
                     generarReportes();
                     break;
+                case 10:
+                    eliminarEstudiante(scanner);
+                    break;
+                case 11: 
+                    actualizarEstudiante(scanner);
+                    break;
+                case 12: 
+                    recuperarCarreras();
+                    break;
                 case 0:
                     exit = true;
                     break;
@@ -93,10 +97,10 @@ public class App {
                     break;
             }
         }
-
+        inscripcionDAO.getInscripcion(2, 1);
         em.close();
         emf.close();
-        scanner.close();
+        scanner.close(); 
     }
 
 
@@ -218,8 +222,72 @@ public class App {
     };
 
     private static void generarReportes() {
+
         ReporteService reporte = new ReporteService();
         reporte.generarReporte(carreraDAO, inscripcionDAO);
         reporte.printReporte();
+    }
+    private static void eliminarEstudiante(Scanner scanner){
+        System.out.println("Ingrese el número de libreta universitaria del estudiante:");
+        long libretaUniversitaria = scanner.nextLong();
+
+        try {
+            estudianteDAO.deleteEstudiante(libretaUniversitaria);
+            System.out.println("Estudiante eliminado");
+        } catch (Exception e) {
+            System.out.println("Estudiante no encontrado.");
+        }
+    }
+    private static void actualizarEstudiante(Scanner scanner){
+        System.out.println("Ingrese el número de libreta universitaria del estudiante que quieres actualizar:");
+        long libretaUniversitaria = scanner.nextLong();
+
+        Estudiante estudiante = estudianteDAO.getEstudianteByLibreta(libretaUniversitaria);
+        if (estudiante != null) {
+            System.out.println("Estudiante encontrado por su libreta: " + estudiante);
+
+            // Update the fields as needed
+            System.out.println("Ingrese el nuevo número de documento (actual: " + estudiante.getNumeroDeDocumento() + "):");
+            long nuevoNumeroDeDocumento = scanner.nextLong();
+            estudiante.setNumeroDeDocumento(nuevoNumeroDeDocumento);
+            scanner.nextLine(); // Consume the newline character
+            
+
+            System.out.println("Ingrese el nuevo nombre (actual: " + estudiante.getNombre() + "):");
+            String nuevoNombre = scanner.nextLine();
+            estudiante.setNombre(nuevoNombre);
+
+            System.out.println("Ingrese el nuevo apellido (actual: " + estudiante.getApellido() + "):");
+            String nuevoApellido = scanner.nextLine();
+            estudiante.setApellido(nuevoApellido);
+
+            System.out.println("Ingrese la nueva edad (actual: " + estudiante.getEdad() + "):");
+            int nuevaEdad = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+            estudiante.setEdad(nuevaEdad);
+
+            System.out.println("Ingrese la nueva ciudad de residencia (actual: " + estudiante.getCiudadResidencia() + "):");
+            String nuevaCiudadResidencia = scanner.nextLine();
+            estudiante.setCiudadResidencia(nuevaCiudadResidencia);
+
+            System.out.println("Ingrese el nuevo género (actual: " + estudiante.getGenero() + ") [masculino/femenino]:");
+            String nuevoGenero = scanner.nextLine().toLowerCase();
+            estudiante.setGenero(nuevoGenero);
+            System.out.println(estudiante);
+            // Save the updated student
+            try {
+                estudianteDAO.updateEstudiante(estudiante);
+                System.out.println("Estudiante actualizado exitosamente: " + estudiante);
+            } catch (Exception e) {
+                System.out.println("Estudiante no encontrado.");
+            };
+        }
+    }
+    private static void recuperarCarreras(){
+        List<Carrera> carreras = carreraDAO.getCarreras();
+
+        for (Carrera c : carreras) {
+            System.out.println(c);
+        }
     }
 }

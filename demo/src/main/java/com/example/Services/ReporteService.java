@@ -4,19 +4,17 @@ import com.example.DTO.ReporteCarrera;
 import com.example.Entities.Carrera;
 import com.example.Entities.Inscripcion;
 import com.example.SearchStrategy.InscripcionSearchByCarrera;
-import com.example.SortStrategy.CarreraSortByNombre;
 import com.example.SortStrategy.CarreraSortStrategy;
-import com.example.SortStrategy.InscripcionSortByFecha;
 import com.example.SortStrategy.InscripcionSortStrategy;
+import com.example.SortStrategy.CarreraSortStrategy.CarreraCriterio;
+import com.example.SortStrategy.InscripcionSortStrategy.InscripcionCriterio;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.DAOFactory.CarreraDAO;
 import com.example.DAOFactory.InscripcionDAO;
-import com.example.Entities.Carrera;
 import com.example.Entities.Estudiante;
-import com.example.Entities.Inscripcion;
 
 
 public class ReporteService {
@@ -26,12 +24,12 @@ public class ReporteService {
         this.reportes = new ArrayList<ReporteCarrera>();
     }
     public void generarReporte(CarreraDAO carreraDAO, InscripcionDAO inscripcionDAO) {
-        CarreraSortStrategy strategySortCarrera = new CarreraSortByNombre();
+        CarreraSortStrategy strategySortCarrera = new CarreraSortStrategy(CarreraCriterio.NOMBRE_CARRERA);
 
         //sort de carreras por nombre
         List<Carrera> carreras = carreraDAO.getCarrerasSorteadas(strategySortCarrera);
 
-        InscripcionSortStrategy strategySortInscripcion = new InscripcionSortByFecha();
+        InscripcionSortStrategy strategySortInscripcion = new InscripcionSortStrategy(InscripcionCriterio.FECHA_INSCRIPCION);
 
         for (Carrera c : carreras) {
             List<Estudiante> inscriptos = new ArrayList<Estudiante>();

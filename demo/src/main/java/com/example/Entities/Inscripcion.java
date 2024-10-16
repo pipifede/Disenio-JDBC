@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@IdClass(InscripcionId.class)
 public class Inscripcion {
+    
     @Id
     @ManyToOne
     @JoinColumn(name = "estudianteId", referencedColumnName = "libretaUniversitaria")

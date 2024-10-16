@@ -30,6 +30,9 @@ public class Carrera {
     public String getNombreCarrera() {
         return nombreCarrera;
     }
+    public void setNombreCarrera(String nombreCarrera) {
+        this.nombreCarrera = nombreCarrera;
+    }
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
